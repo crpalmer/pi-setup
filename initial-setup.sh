@@ -3,11 +3,14 @@
 echo "Adding crpalmer"
 
 adduser crpalmer
-addgroup crpalmer audio
+for group in `groups pi | sed 's/.* : pi //'`
+do
+    addgroup crpalmer $group
+done
 
-echo "Deleting the pi user"
+echo "Disabling the pi user"
 
-deluser pi
+passwd -l pi
 
 echo "Setting up ssh keys"
 
@@ -16,8 +19,11 @@ scp -r crpalmer@compile:.ssh ~crpalmer
 
 echo "Configuring crpalmer for git"
 
-sudo crpalmer git config --global user.name "Christopher R. Palmer"
-sudo crpalmer git config --global user.email crpalmer@gmail.com
+(
+    cd ~crpalmer
+    sudo -u crpalmer git config --global user.name "Christopher R. Palmer"
+    sudo -u crpalmer git config --global user.email crpalmer@gmail.com
+)
 
 echo "Configuring root for git"
 
