@@ -1,5 +1,9 @@
 #!/bin/sh -e
 
+# to set volume:
+# amixer cset numid=1 -- 100%
+
 echo "Installing audio software"
 
-apt-get install alsa-utils mpg321
+# alsa-utils already installed, not needed
+apt-get install mpg321
