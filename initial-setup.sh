@@ -40,3 +40,7 @@ echo 'export EDITOR=vi' >> /etc/bash.bashrc
 echo "Installing packages"
 
 apt-get install libusb-dev
+
+echo "Configuring WIFI"
+
+scp crpalmer@compile:pi/setup/interfaces /etc/network/
