@@ -15,7 +15,10 @@ passwd -l pi
 echo "Setting up ssh keys"
 
 scp -r crpalmer@compile:.ssh ~
-scp -r crpalmer@compile:.ssh ~crpalmer
+
+rm -f ~/.ssh/known_hosts
+cp -r ~/.ssh ~crpalmer/
+chown -R crpalmer ~crpalmer/.ssh
 
 echo "Configuring crpalmer for git"
 
