@@ -44,7 +44,7 @@ apt-get install libusb-dev
 
 echo "Configuring WIFI"
 
-scp crpalmer@compile:pi/setup/interfaces /etc/network/
+cp interfaces /etc/network/
 
 echo "Updating default modules"
 
