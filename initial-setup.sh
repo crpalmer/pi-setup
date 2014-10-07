@@ -26,6 +26,7 @@ echo "Configuring crpalmer for git"
     cd ~crpalmer
     sudo -u crpalmer git config --global user.name "Christopher R. Palmer"
     sudo -u crpalmer git config --global user.email crpalmer@gmail.com
+    sudo -u crpalmer git config --global color.ui true
 )
 
 echo "Configuring root for git"
@@ -44,3 +45,8 @@ apt-get install libusb-dev
 echo "Configuring WIFI"
 
 scp crpalmer@compile:pi/setup/interfaces /etc/network/
+
+echo "Updating default modules"
+
+echo spi_bcm2708 >> /etc/modules
+

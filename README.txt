@@ -22,3 +22,5 @@ edit /etc/sudoers and change pi to crpalmer (last line)
 exit and log back in
 
 edit .git/config and change origin to git@github.com:crpalmer/pi-setup
+
+edit /etc/modprobe.d/raspi-blacklist.conf and comment out spi-bcm2708
