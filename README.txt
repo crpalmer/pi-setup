@@ -1,16 +1,24 @@
 To setup a new install, plug in the ethernet cable, boot and then
 
-ssh as pi / raspberry
+ssh-keygen -f "/home/crpalmer/.ssh/known_hosts" -R raspberrypi
+ssh pi@raspberrypi
+ (password: raspberry)
 
 sudo raspi-config
   * Advanced >> Update
   * Advanced >> Hostname
   * Advanced >> Memory Split (use least video memory)
-  * Advanced >> Boot make sure it books to console
   * Expand filesystem
+  * Enable boot to ... (make sure it is booting to console)
   * Internationalisation >> Change_timezone
 
-Allow it to reboot
+Allow it to reboot and then ssh pi@<new host name you picked>
+
+sudo su -
+apt-get update
+apt-get upgrade
+rpi-update
+shutdown -r now
 
 sudo su -
 apt-get install git
