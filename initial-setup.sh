@@ -40,7 +40,7 @@ echo 'export EDITOR=vi' >> /etc/bash.bashrc
 
 echo "Installing packages"
 
-apt-get install libusb-dev
+apt-get install libusb-dev mpg321
 
 echo "Configuring WIFI"
 
