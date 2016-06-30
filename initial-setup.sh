@@ -42,10 +42,6 @@ echo "Installing packages"
 
 apt-get install libusb-dev mpg321
 
-echo "Configuring WIFI"
-
-cp interfaces /etc/network/
-
 echo "Updating default modules"
 
 echo spi_bcm2708 >> /etc/modules
