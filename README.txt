@@ -2,7 +2,9 @@ To setup a new install, flash the latest img and setup the initial
 wifi config something like:
 
 sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdc
-sudo cp wpa_supplicant.conf /media/crpalmer/202638e1-4ce4-45df-9a00-ad725c2537bb/etc/wpa_supplicant/
+sudo cp wpa_supplicant.conf /media/crpalmer/*/etc/wpa_supplicant/
+sudo vi /media/crpalmer/networking/interfaces
+  and change wpa-conf to wpa-roam wherever it appears
 
 Insert the sdcard and boot up the pi and then:
 
