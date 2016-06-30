@@ -1,23 +1,32 @@
-To setup a new install, plug in the ethernet cable, boot and then
+To setup a new install, flash the latest img and setup the initial
+wifi config something like:
+
+sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdc
+sudo cp wpa_supplicant.conf /media/crpalmer/202638e1-4ce4-45df-9a00-ad725c2537bb/etc/wpa_supplicant/
+
+Insert the sdcard and boot up the pi and then:
 
 ssh-keygen -f "/home/crpalmer/.ssh/known_hosts" -R raspberrypi
 ssh pi@raspberrypi
  (password: raspberry)
 
 sudo raspi-config
-  * Advanced >> Update
+  * Expand filesystem
+  * Internationalisation >> Change_timezone
   * Advanced >> Hostname
   * Advanced >> Memory Split (use least video memory)
-  * Expand filesystem
-  * Enable boot to ... (make sure it is booting to console)
-  * Internationalisation >> Change_timezone
+  * Advanced >> Update
 
-Allow it to reboot and then ssh pi@<new host name you picked>
+Reboot and login again using the new hostname:
+
+sudo shutdown -r now
+ssh pi@<new hostname>
+
+Update the software:
 
 sudo su -
 apt-get update
 apt-get upgrade
-rpi-update
 shutdown -r now
 
 sudo su -
@@ -28,16 +37,16 @@ cd setup
 
 edit /etc/sudoers and change pi to crpalmer (last line)
 edit .git/config and change origin to git@github.com:crpalmer/pi-setup
-edit /etc/modprobe.d/raspi-blacklist.conf and comment out spi-bcm2708
 
 exit, exit and login as crpalmer
 
 git clone git@github.com:crpalmer/pi_lib.git lib
 (cd lib && make)
 git clone git@github.com:crpalmer/halloween
-(cd halloween/2014 && make)
+(cd halloween/ && make)
+(cd halloween/YEAR && make)
+git clone --single-branch --branch YEAR git@github.com:crpalmer/halloween-media.git 
 
-unplug the ethernet cable and reboot
 
 ----------------------------------------------------------------------------
 --                                                                        --
