@@ -1,9 +1,17 @@
-To setup a new install, flash the latest img and setup the initial
-wifi config something like:
+To setup a new install, insert an sdcard into a linux laptop and make
+sure all the partitions are unmounted.  For example:
+
+sudo umount /dev/sdc1
+sudo umount /dev/sdc2
+
+flash the latest img and setup the initial wifi config something like:
 
 sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdc
 sudo cp wpa_supplicant.conf /media/crpalmer/*/etc/wpa_supplicant/
-sudo vi /media/crpalmer/networking/interfaces
+
+update the password for the network in that destination file
+
+sudo vi /media/crpalmer/*/etc/network/interfaces
   and change wpa-conf to wpa-roam wherever it appears
 
 Insert the sdcard and boot up the pi and then:
@@ -14,7 +22,8 @@ ssh pi@raspberrypi
 
 sudo raspi-config
   * Expand filesystem
-  * Internationalisation >> Change_timezone
+  * Internationalisation >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
+  * Internationalisation >> Change Timezone
 [ set the wifi country and the locale too? ]
   * Advanced >> Hostname
   * Advanced >> Memory Split (use least video memory)
@@ -38,13 +47,19 @@ git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
 ./initial-setup.sh
 
-edit /etc/sudoers and change pi to crpalmer (last line)
-edit .git/config and change origin to git@github.com:crpalmer/pi-setup
+vi /etc/sudoers
+  change pi to crpalmer (last line)
+
+vi .git/config
+  change origin to git@github.com:crpalmer/pi-setup
 
 exit, exit and login as crpalmer
 
 git clone git@github.com:crpalmer/pi_lib.git lib
 (cd lib && make)
+
+----------------------- Halloween set ----------------------------------
+
 git clone git@github.com:crpalmer/halloween
 (cd halloween/ && make)
 (cd halloween/YEAR && make)
