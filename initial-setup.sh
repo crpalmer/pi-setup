@@ -41,8 +41,3 @@ echo 'export EDITOR=vi' >> /etc/bash.bashrc
 echo "Installing packages"
 
 apt-get install libusb-dev mpg321
-
-echo "Updating default modules"
-
-echo spi_bcm2708 >> /etc/modules
-
