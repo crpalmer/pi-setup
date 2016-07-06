@@ -1,10 +1,5 @@
 #!/bin/sh -e
 
-echo "Installing packages"
-
-apt-get install libusb-dev mpg321
-apt-get --no-install-recommends install pulseaudio pulseaudio-module-bluetooth bluez
-
 echo "Adding crpalmer"
 
 adduser crpalmer
@@ -12,8 +7,6 @@ for group in `groups pi | sed 's/.* : pi //'`
 do
     addgroup crpalmer $group
 done
-addgroup root pulse-access
-addgroup crpalmer pulse-access
 
 echo "Disabling the pi user"
 
@@ -45,17 +38,11 @@ echo "Setting EDIIOR to vi"
 
 echo 'export EDITOR=vi' >> /etc/bash.bashrc
 
-#echo "Updating default modules"
-#
-#echo spi_bcm2708 >> /etc/modules
+echo "Installing packages"
 
-echo "Configuring bluetooth audio via pulseaudio"
+apt-get install libusb-dev mpg321
 
-cp pulseaudio-bluetooth.conf /etc/dbus-1/system.d/pulseaudio-bluetooth.conf
-cat system.pa >> /etc/pulse/system.pa
-cp pulseaudio.service /etc/systemd/system/pulseaudio.service
+echo "Updating default modules"
 
+echo spi_bcm2708 >> /etc/modules
 
-systemctl daemon-reload
-systemctl enable pulseaudio.service
-systemctl start pulseaudio.service
