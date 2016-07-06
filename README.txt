@@ -15,6 +15,7 @@ ssh pi@raspberrypi
 sudo raspi-config
   * Expand filesystem
   * Internationalisation >> Change_timezone
+[ set the wifi country and the locale too? ]
   * Advanced >> Hostname
   * Advanced >> Memory Split (use least video memory)
   * Advanced >> Update
@@ -70,6 +71,8 @@ iface wlan0 inet static
 
 
 ==== Temperature Sensors on 1wire ======
+
+[ Is this deprecated by newer version of raspbian? ]
 
 sudo mkdir /mnt/1wire
 sudo apt-get install owserver owfs
