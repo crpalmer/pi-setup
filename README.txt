@@ -76,20 +76,17 @@ git clone git@github.com:crpalmer/halloween
 
 ==== Static IP ====
 
-Change /etc/network/interfaces and update the wlan section to
+Change /etc/dhcpcd.conf and update the network device to make static like:
 
-iface wlan0 inet static
-        wpa-ssid "palmer"
-        wpa-psk  "chrispalmer"
-        address 192.168.1.**ip**
-        netmask 255.255.255.0
-        gateway 192.168.1.1
-	dns-nameservers 192.168.1.1
+interface eth0
+static ip_address=192.168.1.6
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1
 
 
 ==== Temperature Sensors on 1wire ======
 
-[ Is this deprecated by newer version of raspbian? ]
+[ Is this deprecated by newer version of raspbian? I think you just need to enable 1wire & maybe spi in raspi-config]
 
 sudo mkdir /mnt/1wire
 sudo apt-get install owserver owfs
@@ -107,9 +104,10 @@ start owfs
 
 Set the boot mode to be to log pi into the desktop via raspi-config.
 
+sudo apt-get install xserver-org lxde lightdm xinit
 sudo apt-get install chromium-browser x11-xserver-utils
 
-Add a startup script to "/etc/xdg/lxsession/LXDE/autostart".  For example adding:
+Add a startup script to "~pi/.config/lxsession/LXDE/autostart".  For example adding:
 @/opt/keezer/lxde-autostart.sh
 
 Look at keezer.git for an example of what to put in it.
@@ -124,8 +122,25 @@ Install rvm and other packages:
   gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
   curl -L get.rvm.io | bash -s stable --rails
   . ~/.rvm/scripts/rvm
+  rvm use ruby
+  gem install rails
+  bundle install
   gem install execjs
 
 Load rvm on login by adding this to .bashrc:
 
   source ~/.rvm/scripts/rvm
+
+To update to the latest ruby in your branch do
+
+  rvm install ruby
+  rvm use ruby
+  rvm upgrade <old-version> ruby
+
+
+===== HDMI on keezer ====
+
+Set this in /boot/config.txt:
+
+hdmi_group=1
+hdmi_mode=4
