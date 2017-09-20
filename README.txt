@@ -10,11 +10,11 @@ sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdc
 
 remove the sdcard and then reinsert it to get it to remount the partition(s)
 
-sudo cp wpa_supplicant.conf /media/crpalmer/*/etc/wpa_supplicant/
-sudo vi /media/crpalmer/*/etc/wpa_supplicant/wpa_supplicant.conf
+sudo touch /media/crpalmer/boot/ssh
+sudo cp wpa_supplicant.conf /media/crpalmer/boot/
+sudo vi /media/crpalmer/boot/wpa_supplicant.conf
   update the password for the network
-sudo vi /media/crpalmer/*/etc/network/interfaces
-  and change wpa-conf to wpa-roam wherever it appears
+eject the sdcard
 
 Insert the sdcard and boot up the pi and then:
 
@@ -23,13 +23,13 @@ ssh pi@raspberrypi
  (password: raspberry)
 
 sudo raspi-config
-  * Expand filesystem
-  * Internationalisation >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
-  * Internationalisation >> Change Timezone
+  * Advanced Options >> Expand filesystem
+  * Localization Options >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
+  * Locatization Options >> Change Timezone
 [ set the wifi country and the locale too? ]
-  * Advanced >> Hostname
-  * Advanced >> Memory Split (use least video memory)
-  * Advanced >> Update
+  * Hostname
+  * Advanced >> Memory Split >> 64 MB (required for pigpio)
+  * Update
 
 Reboot and login again using the new hostname:
 
@@ -48,9 +48,6 @@ apt-get install git
 git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
 ./initial-setup.sh
-
-vi /etc/sudoers
-  change pi to crpalmer (last line)
 
 vi .git/config
   change origin to git@github.com:crpalmer/pi-setup
