@@ -1,18 +1,10 @@
-To setup a new install, flash the latest img, something like:
+To setup a new install, flash the latest img and setup the initial
+wifi config something like:
 
-sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/mmcblk0
-
-Remove and insert the sdcard and then setup the wifi:
-
+sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdc
 sudo cp wpa_supplicant.conf /media/crpalmer/*/etc/wpa_supplicant/
-sudo vi /media/crpalmer/*/etc/wpa_supplicant/wpa_supplicant.conf
-  and edit the password
-sudo vi /media/crpalmer/*/etc/network/interfaces
+sudo vi /media/crpalmer/networking/interfaces
   and change wpa-conf to wpa-roam wherever it appears
-
-umount the sdcard
-
-sudo umount /media/crpalmer/*
 
 Insert the sdcard and boot up the pi and then:
 
@@ -25,6 +17,7 @@ sudo raspi-config
   * Internationalisation >> Change_timezone
 [ set the wifi country and the locale too? ]
   * Advanced >> Hostname
+  * Advanced >> Memory Split (use least video memory)
   * Advanced >> Update
 
 Reboot and login again using the new hostname:
@@ -37,9 +30,7 @@ Update the software:
 sudo su -
 apt-get update
 apt-get upgrade
-
 shutdown -r now
-ssh pi@<new hostname>
 
 sudo su -
 apt-get install git
@@ -47,10 +38,8 @@ git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
 ./initial-setup.sh
 
-vi /etc/sudoers
-  and change pi to crpalmer (last line)
-vi .git/config
-  and change origin to git@github.com:crpalmer/pi-setup
+edit /etc/sudoers and change pi to crpalmer (last line)
+edit .git/config and change origin to git@github.com:crpalmer/pi-setup
 
 exit, exit and login as crpalmer
 
@@ -60,8 +49,6 @@ git clone git@github.com:crpalmer/halloween
 (cd halloween/ && make)
 (cd halloween/YEAR && make)
 git clone --single-branch --branch YEAR git@github.com:crpalmer/halloween-media.git 
-
-NOTE: If you are doing a year agnostic prop, such as the thunder, YEAR is "master".
 
 
 ----------------------------------------------------------------------------
