@@ -59,6 +59,7 @@ git clone git@github.com:crpalmer/pi_lib.git lib
 
 ----------------------- Halloween set ----------------------------------
 
+git clone --single-branch --branch master git@github.com:crpalmer/halloween-media.git halloween-media.master
 git clone --single-branch --branch YEAR git@github.com:crpalmer/halloween-media.git
 git clone git@github.com:crpalmer/halloween
 (cd halloween/ && make)
