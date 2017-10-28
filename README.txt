@@ -89,13 +89,10 @@ static domain_name_servers=192.168.1.1
 sudo mkdir /mnt/1wire
 sudo apt-get install owserver owfs
 
-You need to add /etc/init.d/owfs which can be found in my github in
+You need to add setup the owfs service which can be found in my github in
 keezer/server.
 
 If using kiosk mode then you will need to start the services in /etc/rc.local
-
-start owserver
-start owfs
 
 
 ==== Kiosk Mode ====
