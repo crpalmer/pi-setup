@@ -1,22 +1,19 @@
 To setup a new install, insert an sdcard into a linux laptop and make
 sure all the partitions are unmounted.  For example:
 
-sudo umount /dev/sdc1
-sudo umount /dev/sdc2
+sudo umount /dev/sdi1
+sudo umount /dev/sdi2
 
 flash the latest img and setup the initial wifi config something like:
 
-sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdc
+sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdi bs=1M
 
 remove the sdcard and then reinsert it to get it to remount the partition(s)
 
 sudo touch /media/crpalmer/boot/ssh
-sudo cp wpa_supplicant.conf /media/crpalmer/boot/
-sudo vi /media/crpalmer/boot/wpa_supplicant.conf
-  update the password for the network
 eject the sdcard
 
-Insert the sdcard and boot up the pi and then:
+Insert the sdcard and boot up the pi with ethernet attached and then:
 
 ssh-keygen -f "/home/crpalmer/.ssh/known_hosts" -R raspberrypi
 ssh pi@raspberrypi
@@ -26,12 +23,12 @@ sudo raspi-config
   * Advanced Options >> Expand filesystem
   * Localization Options >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
   * Locatization Options >> Change Timezone
-[ set the wifi country and the locale too? ]
+  * Network >> Wifi set the AP name/password
   * Hostname
   * Advanced >> Memory Split >> 64 MB (required for pigpio)
   * Update
 
-Reboot and login again using the new hostname:
+Reboot, remove ethernet and login again using the new hostname:
 
 sudo shutdown -r now
 ssh pi@<new hostname>
@@ -41,10 +38,10 @@ Update the software:
 sudo su -
 apt-get update
 apt-get upgrade
+apt-get install git
 shutdown -r now
 
 sudo su -
-apt-get install git
 git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
 ./initial-setup.sh
