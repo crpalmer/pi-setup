@@ -8,10 +8,12 @@ flash the latest img and setup the initial wifi config something like:
 
 sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdi bs=1M
 
-remove the sdcard and then reinsert it to get it to remount the partition(s)
+remove the sdcard and then reinsert it:
 
-sudo touch /media/crpalmer/boot/ssh
-eject the sdcard
+mkdir -p /tmp/mnt
+sudo mount /dev/sdi1 /tmp/mnt
+sudo touch /tmp/mnt/ssh
+sudo umount /dev/sdi1
 
 Insert the sdcard and boot up the pi with ethernet attached and then:
 
@@ -25,8 +27,7 @@ sudo raspi-config
   * Locatization Options >> Change Timezone
   * Network >> Wifi set the AP name/password
   * Hostname
-  * Advanced >> Memory Split >> 64 MB (required for pigpio)
-  * Update
+  * Interfacing Options >> I2C >> Enable
 
 Reboot, remove ethernet and login again using the new hostname:
 
