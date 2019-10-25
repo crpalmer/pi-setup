@@ -40,7 +40,7 @@ echo 'export EDITOR=vi' >> /etc/bash.bashrc
 
 echo "Installing packages"
 
-apt-get install libusb-dev mpg321
+apt-get install libusb-dev mpg321 i2c-tools
 
 echo "Setting up autorun"
 
