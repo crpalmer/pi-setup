@@ -1,14 +1,9 @@
-To setup a new install, insert an sdcard into a linux laptop and make
-sure all the partitions are unmounted.  For example:
+Make sure you have the rpi-imager installed:
 
-sudo umount /dev/sdi1
-sudo umount /dev/sdi2
+sudo snap install rpi-imager
 
-flash the latest img and setup the initial wifi config something like:
-
-sudo dd if=/tmp/2016-05-27-raspbian-jessie-lite.img of=/dev/sdi bs=1M
-
-remove the sdcard and then reinsert it:
+Run the rpi-imager with the sd card inserted and install the Lite Raspberry Pi OS to it.  After it
+is installed enable SSH:
 
 mkdir -p /tmp/mnt
 sudo mount /dev/sdi1 /tmp/mnt
@@ -17,16 +12,35 @@ sudo umount /dev/sdi1
 
 Insert the sdcard and boot up the pi with ethernet attached and then:
 
+[NOT WORKING - the create wpa_supplicant.conf was missing the network section] If you want to manually configure wifi instead of attaching an ethernet cable them add this file
+to /boot/wpa_supplicant.conf:
+
+--
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+country=US
+update_config=1
+
+network={
+ ssid="palmer"
+ psk="password"
+}
+
+--
+
+before the first boot.  Either way boot it and on the local computer run:
+
 ssh-keygen -f "/home/crpalmer/.ssh/known_hosts" -R raspberrypi
 ssh pi@raspberrypi
  (password: raspberry)
+
 
 sudo raspi-config
   * Advanced Options >> Expand filesystem
   * Localization Options >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
   * Locatization Options >> Change Timezone
-  * Network >> Wifi set the AP name/password
-  * Hostname
+  * System >> Wifi set the AP name/password
+  * System >> Hostname
   * Interfacing Options >> I2C >> Enable
 
 Reboot, remove ethernet and login again using the new hostname:
@@ -37,15 +51,19 @@ ssh pi@<new hostname>
 Update the software:
 
 sudo su -
-apt-get update
-apt-get upgrade
-apt-get install git
+apt-get update && apt-get upgrade && apt-get install git
 shutdown -r now
+
+Run the basic setup:
 
 sudo su -
 git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
-./initial-setup.sh
+
+and then run which every one makes more sense:
+
+./initial-setup-halloween.sh
+./initial-setup-generic.sh
 
 vi .git/config
   change origin to git@github.com:crpalmer/pi-setup
@@ -62,7 +80,6 @@ git clone --single-branch --branch YEAR git@github.com:crpalmer/halloween-media.
 git clone git@github.com:crpalmer/halloween
 (cd halloween/ && make)
 (cd halloween/YEAR && make)
-
 
 ----------------------------------------------------------------------------
 --                                                                        --
@@ -82,29 +99,21 @@ static domain_name_servers=192.168.1.1
 
 ==== Temperature Sensors on 1wire ======
 
-[ Is this deprecated by newer version of raspbian? I think you just need to enable 1wire & maybe spi in raspi-config]
+sudo raspi-config
+ * interfacing Options >> 1 Wire Interface >> Yes
 
-sudo mkdir /mnt/1wire
-sudo apt-get install owserver owfs
+and reboot
 
-You need to add setup the owfs service which can be found in my github in
-keezer/server.
-
-If using kiosk mode then you will need to start the services in /etc/rc.local
+You should now see devices in /sys/bus/w1/devices that correspond to the device id and also a w1_bus_master1 device.
 
 
 ==== Kiosk Mode ====
 
-Set the boot mode to be to log pi into the desktop via raspi-config.
-
-sudo apt-get install xserver-org lxde lightdm xinit
+sudo apt-get install lxde lightdm xinit
 sudo apt-get install chromium-browser x11-xserver-utils
 
-Add a startup script to "~pi/.config/lxsession/LXDE/autostart".  For example adding:
-@/opt/keezer/lxde-autostart.sh
-
-Look at keezer.git for an example of what to put in it.
-
+Set the boot mode to be to log pi into the desktop via raspi-config:
+  * Boot Options >> Desktop / CLI >> Desktop Autologin as crpalmer
 
 ===== Ruby on Rails ====
 
@@ -130,10 +139,22 @@ To update to the latest ruby in your branch do
   rvm use ruby
   rvm upgrade <old-version> ruby
 
-
 ===== HDMI on keezer ====
 
 Set this in /boot/config.txt:
 
 hdmi_group=1
 hdmi_mode=4
+
+==== Keezer Setup after Kiosk Mode and Ruby on Rails ===
+
+git clone git@github.com:crpalmer/keezer.git
+(cd keezer/server ; make install)
+
+Add a startup script to ".config/lxsession/LXDE/autostart":
+@/opt/keezer/lxde-autostart.sh
+
+Add refresh cron job
+Add starting ruby server
+Add starting temp controller
+
