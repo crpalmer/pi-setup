@@ -51,7 +51,7 @@ ssh pi@<new hostname>
 Update the software:
 
 sudo su -
-apt-get update && apt-get upgrade && apt-get install git
+apt-get update && apt-get -y upgrade && apt-get -y install git && apt autoremove -y
 shutdown -r now
 
 Run the basic setup:

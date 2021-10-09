@@ -6,6 +6,6 @@
 echo "Installing audio software"
 
 # alsa-utils already installed, not needed
-apt-get install mpg321
+apt-get -y install mpg321
 
-apt-get install omxplayer
+apt-get -y install omxplayer
