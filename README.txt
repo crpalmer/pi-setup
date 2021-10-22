@@ -37,24 +37,21 @@ ssh pi@raspberrypi
 
 sudo raspi-config
   * Advanced Options >> Expand filesystem
-  * Localization Options >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
-  * Locatization Options >> Change Timezone
   * System >> Wifi set the AP name/password
   * System >> Hostname
   * Interfacing Options >> I2C >> Enable
+  * Locatization Options >> Change Timezone
+  * Localization Options >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
 
-Reboot, remove ethernet and login again using the new hostname:
-
-sudo shutdown -r now
-ssh pi@<new hostname>
-
-Update the software:
+Don't bother restarting and instead update the software:
 
 sudo su -
 apt-get update && apt-get -y upgrade && apt-get -y install git && apt autoremove -y
-shutdown -r now
 
-Run the basic setup:
+Restart (login using the new hostname) and then run the basic setup:
+
+shutdown -r now
+ssh @pi<new name>
 
 sudo su -
 git clone https://github.com/crpalmer/pi-setup.git setup
