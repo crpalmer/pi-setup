@@ -4,7 +4,7 @@
 
 echo "Installing packages"
 
-apt-get install -y libusb-dev mpg321 i2c-tools
+apt-get install -y libusb-dev mpg322 ffmpeg i2c-tools
 
 echo "Setting up autorun"
 
