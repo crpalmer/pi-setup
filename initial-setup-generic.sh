@@ -37,3 +37,5 @@ git config --global user.email crpalmer@gmail.com
 echo "Setting EDIIOR to vi"
 
 echo 'export EDITOR=vi' >> /etc/bash.bashrc
+
+apt-get install -y libusb-dev
