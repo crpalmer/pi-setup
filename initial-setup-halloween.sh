@@ -4,7 +4,7 @@
 
 echo "Installing packages"
 
-apt-get install -y mpg322 ffmpeg i2c-tools
+apt-get install -y ffmpeg i2c-tools
 
 echo "Setting up autorun"
 
