@@ -1,16 +1,11 @@
 #!/bin/sh -e
 
-echo "Adding crpalmer"
+echo "Adding crpalmer to groups"
 
-adduser crpalmer
 for group in `groups pi | sed 's/.* : pi //'`
 do
     addgroup crpalmer $group
 done
-
-echo "Disabling the pi user"
-
-passwd -l pi
 
 echo "Setting up ssh keys"
 
@@ -38,4 +33,4 @@ echo "Setting EDIIOR to vi"
 
 echo 'export EDITOR=vi' >> /etc/bash.bashrc
 
-apt-get install -y libusb-dev
+apt-get install -y libusb-dev libpng-dev i2c-tools cmake

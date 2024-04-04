@@ -2,45 +2,21 @@ Make sure you have the rpi-imager installed:
 
 sudo snap install rpi-imager
 
-Run the rpi-imager with the sd card inserted and install the Lite Raspberry Pi OS to it.  After it
-is installed enable SSH:
+Run the rpi-imager with the sd card inserted and install the Lite Raspberry Pi
+OS to it.  When setting up the install, enter a hostname, username / password,
+wifi credentials, enable SSH, etc.
 
-mkdir -p /tmp/mnt
-sudo mount /dev/sdi1 /tmp/mnt
-sudo touch /tmp/mnt/ssh
-sudo umount /dev/sdi1
+Insert the sdcard and boot up the pi with ethernet attached (if possible)
+and then:
 
-Insert the sdcard and boot up the pi with ethernet attached and then:
+If you have reusing a hostname that is already known clear the keys:
 
-[NOT WORKING - the create wpa_supplicant.conf was missing the network section] If you want to manually configure wifi instead of attaching an ethernet cable them add this file
-to /boot/wpa_supplicant.conf:
+ssh-keygen -f "/home/crpalmer/.ssh/known_hosts" -R HOSTNAME
 
---
-
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-country=US
-update_config=1
-
-network={
- ssid="palmer"
- psk="password"
-}
-
---
-
-before the first boot.  Either way boot it and on the local computer run:
-
-ssh-keygen -f "/home/crpalmer/.ssh/known_hosts" -R raspberrypi
-ssh pi@raspberrypi
- (password: raspberry)
-
+and then ssh to the machine.
 
 sudo raspi-config
-  * Advanced Options >> Expand filesystem
-  * System >> Wifi set the AP name/password
-  * System >> Hostname
-  * Interfacing Options >> I2C >> Enable
-  * Locatization Options >> Change Timezone
+  * Advanced Options >> Expand filesystem [probably not needed anymore]
   * Localization Options >> Change Locale to en_US.UTF-8 UTF-8 and use it as default
 
 Don't bother restarting and instead update the software:
@@ -48,24 +24,21 @@ Don't bother restarting and instead update the software:
 sudo su -
 apt-get update && apt-get -y upgrade && apt-get -y install git && apt autoremove -y
 
-Restart (login using the new hostname) and then run the basic setup:
-
-shutdown -r now
-ssh @pi<new name>
+Restart and login again.
 
 sudo su -
 git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
-
-and then run which every one makes more sense:
-
-./initial-setup-halloween.sh
 ./initial-setup-generic.sh
+
+If you want to add the halloween autorun script run:
+
+./setup-autorun.sh
 
 vi .git/config
   change origin to git@github.com:crpalmer/pi-setup
 
-exit, exit and login as crpalmer
+exit to get back to crpalmer:
 
 git clone git@github.com:crpalmer/pi_lib.git lib
 (cd lib && make)
