@@ -45,6 +45,11 @@ git clone git@github.com:crpalmer/pi_lib.git lib
 
 ----------------------- Halloween set ----------------------------------
 
+Setup external projects:
+
+git clone https://github.com/crpalmer/tinyalsa.git
+cd tinyalsa && mkdir build && cd build && cmake .. && make
+
 git clone --single-branch --branch master git@github.com:crpalmer/halloween-media.git halloween-media.master
 git clone --single-branch --branch YEAR git@github.com:crpalmer/halloween-media.git
 git clone git@github.com:crpalmer/halloween
