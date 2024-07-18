@@ -32,5 +32,6 @@ git config --global user.email crpalmer@gmail.com
 echo "Setting EDIIOR to vi"
 
 echo 'export EDITOR=vi' >> /etc/bash.bashrc
+echo 'export MAKEFLAGS="-j 4"' >> /etc/bash.bashrc
 
-apt-get install -y libusb-dev libpng-dev i2c-tools cmake
+apt-get install -y libusb-dev libpng-dev i2c-tools cmake libgpiod-dev pigpio telnet

@@ -31,30 +31,38 @@ git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
 ./initial-setup-generic.sh
 
+vi .git/config
+  change origin to git@github.com:crpalmer/pi-setup
+
+--------------------------- Autorun Scipt -----------------------------
+
 If you want to add the halloween autorun script run:
 
 ./setup-autorun.sh
 
-vi .git/config
-  change origin to git@github.com:crpalmer/pi-setup
+------------------------ Pico Compilation ------------------------------
 
-exit to get back to crpalmer:
+If you want to compile for pico too:
 
-git clone git@github.com:crpalmer/pi_lib.git lib
-(cd lib && make)
+cd
+wget -O /tmp/pico_setup.sh https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh
+chmod +x /tmp/pico_setup.sh
+/tmp/pico_setup.sh
+git clone -b smp https://github.com/FreeRTOS/FreeRTOS-Kernel --recurse-submodules
+echo 'export FREERTOS_KERNEL_PATH=~FreeRTOS-Kernel' >> .bashrc
+sudo shutdown -r now
 
 ----------------------- Halloween set ----------------------------------
-
-Setup external projects:
-
-git clone https://github.com/crpalmer/tinyalsa.git
-cd tinyalsa && mkdir build && cd build && cmake .. && make
 
 git clone --single-branch --branch master git@github.com:crpalmer/halloween-media.git halloween-media.master
 git clone --single-branch --branch YEAR git@github.com:crpalmer/halloween-media.git
 git clone git@github.com:crpalmer/halloween
-(cd halloween/ && make)
-(cd halloween/YEAR && make)
+
+cd halloween/
+git submodule update --init --recursive
+mkdir build && cd build
+cmake -DPLATFORM=pi ..
+make -j8
 
 ----------------------------------------------------------------------------
 --                                                                        --
