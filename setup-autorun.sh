@@ -1,11 +1,5 @@
 #!/bin/sh -e
 
-./initial-setup-generic.sh
-
-echo "Installing packages"
-
-apt-get install -y ffmpeg i2c-tools
-
 echo "Setting up autorun"
 
 cat > /etc/rc.local <<EOF
@@ -28,4 +22,9 @@ else
 fi
 EOF
 
-chmod +x /root/autorun-wrapper.sh
+cat > /root/autorun.sh <<EOF
+#!/bin/bash
+sleep 120
+EOF
+
+chmod +x /root/autorun-wrapper.sh /root/autorun.sh
