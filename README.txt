@@ -31,10 +31,13 @@ git clone https://github.com/crpalmer/pi-setup.git setup
 cd setup
 ./initial-setup-generic.sh
 
-vi .git/config
-  change origin to git@github.com:crpalmer/pi-setup
+As crpalmer run:
 
---------------------------- Autorun Scipt -----------------------------
+mkdir ~/bin && git clone git@github.com:crpalmer/bin-utils && cd bin-utils && make install
+
+and then exit / login again if proceeding.
+
+-------------------------- Autorun Scipt -----------------------------
 
 If you want to add the halloween autorun script run:
 
