@@ -55,6 +55,10 @@ git clone -b smp https://github.com/FreeRTOS/FreeRTOS-Kernel --recurse-submodule
 echo 'export FREERTOS_KERNEL_PATH=~FreeRTOS-Kernel' >> .bashrc
 sudo shutdown -r now
 
+To build for the pico zero board you need to use:
+
+ cmake ..normal-args.. -DPICO_BOARD=waveshare_rp2040_zero ..
+
 ----------------------- Halloween set ----------------------------------
 
 git clone --single-branch --branch master git@github.com:crpalmer/halloween-media.git halloween-media.master
