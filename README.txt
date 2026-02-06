@@ -45,15 +45,22 @@ If you want to add the halloween autorun script run:
 
 ------------------------ Pico Compilation ------------------------------
 
-If you want to compile for pico too:
+If you want to compile for pico too (TODO: add my branch(es) to this):
 
-cd
-wget -O /tmp/pico_setup.sh https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh
-chmod +x /tmp/pico_setup.sh
-/tmp/pico_setup.sh
-git clone -b smp https://github.com/FreeRTOS/FreeRTOS-Kernel --recurse-submodules
-echo 'export FREERTOS_KERNEL_PATH=~FreeRTOS-Kernel' >> .bashrc
-sudo shutdown -r now
+Fedora:
+
+  cd
+  sudo dnf update
+  sudo dnf install cmake arm-none-eabi-gcc-cs-c++ arm-none-eabi-newlib jimtcl-devel libgpiod-devel libusb1-devel
+  wget -O /tmp/pico_setup.sh https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh
+  chmod +x /tmp/pico_setup.sh
+  vi /tmp/pico_setup.sh   ;  to comment out all apt invocations
+  /tmp/pico_setup.sh
+
+Ubuntu:
+  cd
+  chmod +x /tmp/pico_setup.sh
+  /tmp/pico_setup.sh
 
 To build for the pico zero board you need to use:
 
